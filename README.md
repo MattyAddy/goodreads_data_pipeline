@@ -1,2 +1,27 @@
-# goodreads_data_pipeline
-Ingest and transform book data so that booklovers can extract meaningful insights about the book market
+# Goodreads Data Pipeline
+
+## Introduction
+
+## Problem
+
+## Architecture
+
+## Prequisites
+
+## Infrastructure
+
+## Containerization
+
+## Orchestration
+
+## Web Scraping
+
+## Storage
+
+## Transformation
+
+## Data Warehouse
+
+## Visualization
+
+## Conclusion
