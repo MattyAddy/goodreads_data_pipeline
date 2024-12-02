@@ -41,6 +41,7 @@ from cte_silver
 
 {% if is_incremental() %}
 
-where '{{ now }}' >= (select max(insertdatetime) from {{ this }})
+--where '{{ now }}' >= (select max(insertdatetime) from {{ this }})
+where insertdatetime >= (select max(insertdatetime) from {{ this }})
 
 {% endif %}
