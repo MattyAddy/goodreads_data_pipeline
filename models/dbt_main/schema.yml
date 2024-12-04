@@ -53,9 +53,5 @@ models:
         data_type: datetime
         description: "Time when the record was inserted into the table"
 
-      - name: updatedatetime
-        data_type: datetime
-        description: "Time when the record was updated"
-
 
 
