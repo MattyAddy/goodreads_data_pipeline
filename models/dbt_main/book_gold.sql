@@ -19,8 +19,7 @@ with cte_silver as (
         averagerating,
         reviewcount,
         isbn,
-        cast('{{ now }}' as datetime) as insertdatetime,
-        cast('{{ now }}' as datetime) as updatedatetime
+        cast('{{ now }}' as datetime) as insertdatetime
     from {{ ref('book_silver_stg') }}
 )
 
@@ -35,13 +34,11 @@ select
     averagerating,
     reviewcount,
     isbn,
-    insertdatetime,
-    updatedatetime
-from cte_silver
+    insertdatetime
+from cte_silver s
 
 {% if is_incremental() %}
 
---where '{{ now }}' >= (select max(insertdatetime) from {{ this }})
-where insertdatetime >= (select max(insertdatetime) from {{ this }})
+where s.insertdatetime >= (select max(insertdatetime) from {{ this }})
 
 {% endif %}
