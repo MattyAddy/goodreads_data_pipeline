@@ -22,7 +22,7 @@ genre_div = genre_soup.find_all('div',class_="rightContainer")
 
 # Create and populate list of genre urls
 genre_url_list = []
-for child_div in genre_div[0:3]:
+for child_div in genre_div:
     subchild_div = child_div.find_all('div', class_='left')
     for left_tag in subchild_div:
        a_tag = left_tag.find_all('a')
@@ -37,17 +37,19 @@ book_url_list = []
 for genre_url in genre_url_list:
     book_list_soup = get_soup(genre_url)
     book_list_div = book_list_soup.find_all('div', class_="leftAlignedImage bookBox")
+    genre = genre_url.split('/most_read/')[1]
     # 10 books per genre
-    for book_url_div in book_list_div[0:9]:
+    for book_url_div in book_list_div[0:10]:
         try:
             book_url_full = book_url_div.find('a')['href']
             book_url = base_url + book_url_full
-            book_url_list.append(book_url)
+            book_url_genre = dict(book_url = book_url, genre = genre)
+            book_url_list.append(book_url_genre)
         except TypeError:
             pass
 
 # Book scraping function
-def book(book_url):
+def book(book_url,genre):
     book_soup = get_soup(book_url)
     try:
         book_div = book_soup.find('script', type="application/ld+json")
@@ -57,10 +59,6 @@ def book(book_url):
         publish_div = book_soup.find("div", class_="BookDetails").find("div", class_="FeaturedDetails").find_all("p")
     except AttributeError:
         publish_div = 'None'
-    try: 
-        genre_div = book_soup.find("div", class_ ="BookPageMetadataSection__genres").find("span", class_ ="BookPageMetadataSection__genreButton")
-    except AttributeError:
-        genre_div = 'None'
 
     try:
         script_json = json.loads(book_div.string)
@@ -70,7 +68,6 @@ def book(book_url):
         rating_count = script_json['aggregateRating']['ratingCount']
         average_rating =  script_json['aggregateRating']['ratingValue']
         review_count = script_json['aggregateRating']['reviewCount']
-        isbn = script_json['isbn']
     except (TypeError,KeyError,AttributeError,IndexError):
         title = "none"
         author = "none"
@@ -78,16 +75,14 @@ def book(book_url):
         rating_count = "-1"
         average_rating = "-1"
         review_count = "-1"
+    try:
+        isbn = script_json['isbn']
+    except KeyError:
         isbn = "none"
     try:
         publish_date = publish_div[1].text.split("First published")[1].strip()
     except (TypeError,KeyError,AttributeError,IndexError):
         publish_date = "none"
-
-    try:
-        genre = genre_div.text
-    except (TypeError,KeyError,AttributeError,IndexError):
-        genre = "none"
 
     book_dict = {
         "Title": title, 
@@ -95,9 +90,9 @@ def book(book_url):
         "Genre": genre,
         "NumberOfPages": str(no_pages),
         "PublishDate": publish_date,
-        "Rating Count": str(rating_count),
-        "Average_Rating": str(average_rating),
-        "Review Count": str(review_count),
+        "RatingCount": str(rating_count),
+        "AverageRating": str(average_rating),
+        "ReviewCount": str(review_count),
         "ISBN": isbn
     }
 
@@ -105,9 +100,12 @@ def book(book_url):
 
 def main():
     book_list = []
-    for book_url in book_url_list:
-        book_dict = book(book_url)
+    for book_pair in book_url_list:
+        book_url = book_pair['book_url']
+        genre = book_pair['genre']
+        book_dict = book(book_url,genre)
         book_list.append(book_dict)
+        
     df = pd.DataFrame(book_list)
 
     date_string = pendulum.now('UTC').format('YYYYMMDD')
