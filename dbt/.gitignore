@@ -3,5 +3,5 @@
 target/
 dbt_packages/
 logs/
-README.md
-gen_yaml.sql
+snapshots/
+tests/
