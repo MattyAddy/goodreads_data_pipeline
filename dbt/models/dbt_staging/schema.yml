@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: dbt_staging
     database: goodreads-madams
-    schema: goodreads_db
+    schema: goodreads_db_raw
 
     tables:
       - name: book_bronze_stg
