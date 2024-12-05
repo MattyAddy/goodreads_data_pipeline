@@ -7,38 +7,41 @@
 
 {% set now = modules.datetime.datetime.now() %}
 
-with cte_silver as (
+with cte_fact as (
     select 
         book_id,
         title,
-        author,
-        genre,
-        numberofpages,
+        a.author_dim_id,
+        g.genre_dim_id,
         publishdate,
+        numberofpages,
         ratingcount,
         averagerating,
         reviewcount,
         isbn,
         cast('{{ now }}' as datetime) as insertdatetime
-    from {{ ref('book_silver_stg') }}
+    from {{ ref('book_gold') }} b
+    left join {{ ref('dim_author') }} a ON a.author = b.author
+    left join {{ ref('dim_genre') }} g ON g.genre = b.genre
 )
 
 select 
     book_id,
     title,
-    author,
-    genre,
-    numberofpages,
+    author_dim_id,
+    genre_dim_id,
     publishdate,
+    numberofpages,
     ratingcount,
     averagerating,
     reviewcount,
     isbn,
     insertdatetime
-from cte_silver s
+from cte_fact s
 
 {% if is_incremental() %}
 
 where s.insertdatetime >= (select max(insertdatetime) from {{ this }})
 
 {% endif %}
+
