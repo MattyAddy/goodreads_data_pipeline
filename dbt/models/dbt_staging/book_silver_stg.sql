@@ -11,7 +11,7 @@ select
     genre,
     numberofpages,
     case
-        when publishdate <> "none" then parse_date('%B %d, %Y', publishdate)
+        when publishdate <> "None" then parse_date('%B %d, %Y', publishdate)
         else NULL
     end as publishdate,
     ratingcount,
