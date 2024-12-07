@@ -18,7 +18,9 @@ with cte_fact as (
         ratingcount,
         averagerating,
         reviewcount,
+        {{ top_shelf_logic("averagerating","ratingcount","reviewcount") }} as topshelf,
         isbn,
+        bookurl,
         cast('{{ now }}' as datetime) as insertdatetime
     from {{ ref('book_gold') }} b
     left join {{ ref('dim_author') }} a ON a.author = b.author
@@ -35,7 +37,9 @@ select
     ratingcount,
     averagerating,
     reviewcount,
+    topshelf,
     isbn,
+    bookurl,
     insertdatetime
 from cte_fact s
 

@@ -19,6 +19,7 @@ with cte_silver as (
         averagerating,
         reviewcount,
         isbn,
+        bookurl,
         cast('{{ now }}' as datetime) as insertdatetime
     from {{ ref('book_silver_stg') }}
 )
@@ -34,6 +35,7 @@ select
     averagerating,
     reviewcount,
     isbn,
+    bookurl,
     insertdatetime
 from cte_silver s
 
