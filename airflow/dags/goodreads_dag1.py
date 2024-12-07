@@ -14,7 +14,7 @@ year_folder = "{{ data_interval_start.strftime('%Y') }}"
 month_folder = "{{ data_interval_start.strftime('%m') }}"
 parquet_file = f"goodreads_{execution_date_string}.parquet"
 blob_name = f"madams-terraform-book-data-lake/raw_data/{year_folder}/{month_folder}"
-schema = "goodreads_db"
+schema = "goodreads_db_raw"
 external_table = "ext_book_bronze_stg"
 table = "book_bronze_stg"
 
@@ -27,10 +27,15 @@ GCP_DATASET = os.environ.get("GCP_DATASET")
 
 # Taskflow DAG
 @dag(
-    schedule_interval = None,
+    dag_id = "goodreads_main_dag",
+    schedule = '0 7 * * *',
+    max_active_runs = 1
     start_date = start,
     catchup = False,
-    tags=['example'],
+    default_args = {
+        "retries": 2,
+        "retry_delay": duration(seconds = 100)
+    },
 )
 def goodreads_etl_taskflow():
     @task.bash
