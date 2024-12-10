@@ -36,6 +36,6 @@ select
     {{ dbt.safe_cast("ratingcount", api.Column.translate_type("integer")) }} as ratingcount,
     {{ dbt.safe_cast("averagerating", api.Column.translate_type("decimal")) }} as averagerating,
     {{ dbt.safe_cast("reviewcount", api.Column.translate_type("integer")) }} as reviewcount,
-    {{ dbt.safe_cast("bookurl", api.Column.translate_type("integer")) }} as bookurl,
+    {{ dbt.safe_cast("bookurl", api.Column.translate_type("string")) }} as bookurl,
 from cte_dedupe
 where row_num = 1

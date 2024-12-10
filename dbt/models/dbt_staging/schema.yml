@@ -56,3 +56,7 @@ models:
       - name: reviewcount
         data_type: int64
         description: "Number of user reviews"
+
+      - name: bookurl
+        data_type: string
+        description: "Goodreads Book URL"     

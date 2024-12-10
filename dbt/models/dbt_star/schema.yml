@@ -48,6 +48,10 @@ models:
         data_type: string
         description: "International Standard Book Number, the universal code for the book"
 
+      - name: bookurl
+        data_type: string
+        description: "Goodreads Book URL" 
+
       - name: insertdatetime
         data_type: datetime
         description: "Time when the record was inserted into the table"
