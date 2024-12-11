@@ -18,6 +18,10 @@ select
     averagerating,
     reviewcount,
     isbn,
+    case
+        when isbn <> "None" then isbn
+        else NULL
+    end as isbn,
     url as bookurl,
     row_number() over(partition by title,author) as row_num
 from {{ source('dbt_staging','book_bronze_stg') }}
