@@ -44,6 +44,10 @@ models:
         data_type: int64
         description: "Number of user reviews"
 
+      - name: topshelf
+        data_type: boolean
+        description: "Indicator for highly rated books with many reviews"
+
       - name: isbn
         data_type: string
         description: "International Standard Book Number, the universal code for the book"
