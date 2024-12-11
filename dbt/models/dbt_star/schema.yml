@@ -45,7 +45,7 @@ models:
         description: "Number of user reviews"
 
       - name: topshelf
-        data_type: boolean
+        data_type: int64
         description: "Indicator for highly rated books with many reviews"
 
       - name: isbn
