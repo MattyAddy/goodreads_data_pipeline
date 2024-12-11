@@ -17,7 +17,6 @@ select
     ratingcount,
     averagerating,
     reviewcount,
-    isbn,
     case
         when isbn <> "None" then isbn
         else NULL
