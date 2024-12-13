@@ -1,11 +1,11 @@
 # Goodreads Data Pipeline
 
 ## Introduction
-Reading is one my favorite activies. Whether I'm convering ancient history or , I try to spend at least some amount of time reading each day. Though I enjoy the act, I've always struggled in finding that "next" book to read. I currently track my reading activity through Goodreads, which is part social media and part book database. My previous strategy was to sift through Reddit for recommendations and then dig through the reviews on Goodreads which too look far too long. I knew there was a better way to tackle this problem! 
+Reading is one my favorite activies. Whether I'm convering ancient history or diving into the next fantasy series, I've always enjoyed the educational and entertainment benefits of reading each day. Though I enjoy the act, I've always struggled in finding that "next" book to read. I currently track my reading activity through Goodreads, which is part social media and part book database. My previous strategy was to sift through Reddit for recommendations and then dig through the reviews on Goodreads which too look far too long. I knew there was a better way to tackle this problem! 
 
 The following project is a data pipeline which ingests, loads, and transforms book data on a daily cadence. A dashboard then consumes this data and provides actionable insights so that users can spend less time researching and more time reading.
 
-This project leans on what I've learned in the Data Engineer Zoomcamp. Thank you to Alexey and team for the content!
+This project leverages I've learned in the Data Engineering Zoomcamp. Thank you to Alexey and team for the content!
 
 ## Architecture
 The architecture for this pipeline follows an ELT approach which is short for Extract, Load, and Transform. At a high level, the pipeline follows this:
