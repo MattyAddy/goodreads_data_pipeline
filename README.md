@@ -31,18 +31,51 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 
 ## Prerequisites
 
+The following preqs are free and relatively straightforward to setup
+
+- Google Cloud account
+- dbt Cloud account
+- Github account
 
 ## Infrastructure
 
+All of the core infrastructure is from Google Cloud:
+
+**VM Instance** <br />
+
+
+
+**Cloud Storage** <br />
+
+
+
+**BigQuery** <br />
+
+
+
 ## Containerization
 
+
+
+
 ## Orchestration
+
+Orchestration is handled by Airflow running on a Docker image inside the VM Instance. 
 
 ![image](https://github.com/user-attachments/assets/e0ebd828-afab-4152-bfc2-ec4930236100)
 
 ## Web Scraping
 
+The first challenge of this project was figuring out how to extract data from Goodreads. Ideally we could use their API, but the company recently stopped issuing API keys. With that in mind, I started learning about webscraping. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. 
+
+
+
 ## Storage
+
+The data lake in which to store the raw Parquet files from the scraper is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. I also made sure that the files are stored thoughtfully in the following folder hierarchy:
+
+- Year
+- 
 
 ## Transformation
 
