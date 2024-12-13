@@ -1,12 +1,13 @@
 # Goodreads Data Pipeline
 
 ## Introduction
-Reading is one my favorite activies. Whether I'm convering the decline of the Roman empire or diving into a massive fantasy series, I like to end each day by picking up a book. Though I enjoy the act, I've always struggled in finding that "next" book to read. I currently track my reading activity through Goodreads, which is part social media and part book database. My previous strategy was to sift through Reddit for recommendations and then dig through the reviews on Goodreads which too look far too long. I knew their was a better way to tackle this problem!
+Reading is one my favorite activies. Whether I'm convering ancient history or , I try to spend at least some amount of time reading each day. Though I enjoy the act, I've always struggled in finding that "next" book to read. I currently track my reading activity through Goodreads, which is part social media and part book database. My previous strategy was to sift through Reddit for recommendations and then dig through the reviews on Goodreads which too look far too long. I knew there was a better way to tackle this problem! The following project is a data pipeline which ingests, loads, and transforms book data which culminates with reporting full of actionable insights.
 
-In this project, my goal is to succintly present book data so that I can help readers spend less time searching and more time reading.
+This project leans on what I've learned in the Data Engineer Zoomcamp. Thank you to Alexey and team for the content!
+
 
 ## Architecture
-The overarching architecture is following an ELT approach which is short for Extract, Load, and Transform. At a high level, this pipeline follows this chain:
+The architecture for this pipeline follows an ELT approach which is short for Extract, Load, and Transform. At a high level, the pipeline follows this:
 1. Extract data via web scraping
 2. Load to data lake
 3. Load to data warehouse
@@ -18,7 +19,7 @@ The overarching architecture is following an ELT approach which is short for Ext
 
 **Cloud Vendor**: Google Cloud Plaform <br />
 **Infrastructure Deployment**: Terraform <br />
-**Compute**: GCP VM Instance and BigQuery <br />
+**Compute**: GCP VM Instance and BigQuery Compute <br />
 **Containerization**: Docker Compose <br />
 **Orchestration**: Airflow <br />
 **Ingestion**: Beautiful Soup Web Scraper <br />
