@@ -37,23 +37,69 @@ The following preqs are free and relatively straightforward to setup
 - dbt Cloud account
 - Github account
 
+## Web Scraping
+
+Before diving into the pipeline, I needed to get a working script to ingest data from Goodreads and drop to a file. Ideally I could use their API, but the company recently stopped issuing API keys. With that in mind, I started learning about webscraping. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. I decided to focus specifically on the "Most Read This Week" books per genre. I started with the genre page and extraced just the urls for each of the 40 genres.
+
+If I navigate to one to a genre, we can see 100 books on the page. When selecting an individual book, we can now see some meaningful data such as Publishing Date, Author, Number of Page, and Review data. Each book will ultimately be the grain of the dataset. To illustrate, this is how one example will appear if I save as a CSV:
+
+
+
+
+
+At a high level, this is what the scraper is doing:
+
+Extract list of genre URL's from the HTML and add to a list
+Loop through the list and extract the book URLS from each and add to another list
+Perform the scraping via the BLANK function and drop to a json file
+Add each json to a list and generate one pandas dataframe
+Conver the pandas dataframe to a parquet file
+
+
+
 ## Infrastructure
 
-All of the core infrastructure is from Google Cloud:
-
-**VM Instance** <br />
-
-
-
+All of the core resources for this project are provided by Google Cloud: <br />
+**VM Instance**  <br />
 **Cloud Storage** <br />
+**BigQuery**  <br />
+
+### VM Instance
+
+The nucleus of this project is a virtual machine created via the Console
 
 
 
-**BigQuery** <br />
+This machine has the following settings:
+
+
+
+One can access the VM remotely through the following steps:
+
+Create key in Console
+
+Create hidden directory on local machines root (~) directory
+
+Access the file via VS Code and paste the private key into .....
+
+
+
+
+
+In addition to the compute resource, I am using Cloud Storage for the data lake and BigQuery for the data warehouse. These resources differ in that they were deployed via Terraform. This tool allows the user to use code to deploy resources without needing the Console UI. The VM can also be deployed using Terraform if needed. During testing, I was dropping and recreating the storage containers and BQ datasets on a regular basis (as opposed to just creating the VM once), so Terraform was a great tool to drop and replace resources efficiently.
+
+The terraform folder has the main.tf and varibables.tf files which define the resources. To deploy, one runs the following commands sequentially on the VM: <br />
+
+
 
 
 
 ## Containerization
+
+
+
+
+
 
 
 
@@ -64,11 +110,6 @@ Orchestration is handled by Airflow running on a Docker image inside the VM Inst
 
 ![image](https://github.com/user-attachments/assets/e0ebd828-afab-4152-bfc2-ec4930236100)
 
-## Web Scraping
-
-The first challenge of this project was figuring out how to extract data from Goodreads. Ideally we could use their API, but the company recently stopped issuing API keys. With that in mind, I started learning about webscraping. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. 
-
-
 
 ## Storage
 
@@ -77,9 +118,10 @@ The data lake in which to store the raw Parquet files from the scraper is Google
 - Year
 - 
 
-## Transformation
 
-## Data Warehouse
+## Data Warehouse 
+
+## Transformation
 
 ## Visualization
 
