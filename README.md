@@ -159,34 +159,62 @@ terraform apply
 
 ## Containerization
 
-Docker is the tool to containerize the services needed to run this pipeline. Docker allows us to create an isolated, consistent, and reproducible environment for every pipeline run. When there are many services involved, such as when running Airflow, its helpful to have a service manage some of the complexity for the engineer. There are two files involved in this case, a Dockerfile and a docker-compose YAML file. The Dockerfile
+Docker is the tool to containerize the services needed to run this pipeline. Docker allows us to create an isolated, consistent, and reproducible environment for every pipeline run. When there are many services involved, such as when running Airflow, its helpful to have a service manage some of the complexity for the engineer. 
 
-
-
-
-
-
-
+There are two files involved in this case, a Dockerfile and a Docker Compose YAML file. The Dockerfile will build the image which contain the instructions to build the container which the Airflow DAG will be running on. The Docker Compose file contains the rest of images for the Airflow services such as the web scheduler and web app. For this project, the Dockerfile will be called from within the Docker Compose file.
 
 ## Orchestration
 
-Orchestration is handled by Airflow running on a Docker image inside the VM Instance. 
+Orchestration for this project will be handled by Airflow running on the Docker containers defined above. In simple terms, Airflow allows us to create and schedule the tasks in the pipeline via code. This is handled in the DAG (Directed Acyclic Graph) which defines the workflow's configuration and dependencies. The following screenshot outlines the 6 tasks in the DAG:
 
 ![image](https://github.com/user-attachments/assets/e0ebd828-afab-4152-bfc2-ec4930236100)
 
+This screenshot comes from the Airflow UI which is running on one of the containers defined above. It can be accessed by:
+- Forward port 8080 in VS Code
+![image](https://github.com/user-attachments/assets/ba5dcfde-95ca-4df7-97b2-16f529d7bd41)
+
+- Navigate to http://localhost:8080/home on the local machine
+
+![image](https://github.com/user-attachments/assets/71e62614-dd6b-4954-b22c-c6d4e3d7e57d)
+
+As mentioned previously there are 6 tasks in this DAG:
+- Extract data: Run BASH command to kick off the python webscraping script which drops parquet file to `/data` directory
+- Load data: Upload parquet file from `/data` to Google Cloud Storage
+- Remove local file: Run BASH command to remove from `/data`
+- Delete external table: Drop external table in BigQuery using SQL script
+- Create and insert external table: Create new external table in BigQuery and insert the contents of the daily parquet file
+- Internal table insert: Load data from external table to internal staging table in BigQuery
 
 ## Storage
 
-The data lake in which to store the raw Parquet files from the scraper is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. I also made sure that the files are stored thoughtfully in the following folder hierarchy:
+The data lake in which to store the raw Parquet files from the scraper is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. the files are stored in the following folder hierarchy:
 
 - Year
 - 
 
-
 ## Data Warehouse 
+
+
+
+
+
 
 ## Transformation
 
+
+
+
+
+
+
+
 ## Visualization
+
+
+
+
+
+
+
 
 ## Conclusion
