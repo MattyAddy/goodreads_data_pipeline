@@ -197,7 +197,7 @@ As mentioned previously there are 6 tasks in this DAG:
 - Create and insert external table: Create new external table in BigQuery and insert the contents of the daily parquet file
 - Internal table insert: Load data from external table to internal staging table in BigQuery
 
-The DAG runs on a daily schedule at 12:00 UTC time. The runs for the last 3 days can be seen here:
+The DAG runs on a daily schedule at 12:00 UTC time. The last 12 runs can be seen here. The final 4 runs represent the full dataset being pulled at the scheduled time:
 
 ![image](https://github.com/user-attachments/assets/7dddd566-7a10-4829-9e1e-6bda0f08745b)
 
