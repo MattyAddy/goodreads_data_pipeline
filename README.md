@@ -80,9 +80,15 @@ The nucleus of this project is a virtual machine created via the Console. Before
 ![image](https://github.com/user-attachments/assets/54e40b9d-60e7-45cd-8c5e-fb2f2afce237)
 
 
-- 
+I then created the VM instance in the Console with the following configuration:
+- Machine type: e2-standard-4
+- Boot disk
+    Operating system: Ubuntu<br />
+    Version: Ubuntu 20.04 LTS <br />
+    Size: 32 GB <br />
 
-This machine has the following settings:
+![image](https://github.com/user-attachments/assets/8ea21127-9118-4533-937d-74e330126241)
+
 
 
 
