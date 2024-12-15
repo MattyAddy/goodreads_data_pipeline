@@ -167,7 +167,7 @@ There are two files involved in this case, a Dockerfile and a Docker Compose YAM
 
 Orchestration for this project will be handled by Airflow running on the Docker containers defined above. In simple terms, Airflow allows us to create and schedule the tasks in the pipeline via code. This is handled in the DAG (Directed Acyclic Graph) which defines the workflow's configuration and dependencies. The following screenshot outlines the 6 tasks in the DAG:
 
-![image](https://github.com/user-attachments/assets/e0ebd828-afab-4152-bfc2-ec4930236100)
+![image](https://github.com/user-attachments/assets/b6ca3a4d-f410-4c98-829e-3b58074185e9)
 
 This screenshot comes from the Airflow UI which is running on one of the containers defined above. It can be accessed by:
 - Forward port 8080 in VS Code
@@ -185,23 +185,26 @@ As mentioned previously there are 6 tasks in this DAG:
 - Create and insert external table: Create new external table in BigQuery and insert the contents of the daily parquet file
 - Internal table insert: Load data from external table to internal staging table in BigQuery
 
+The DAG runs on a daily schedule at 12:00 UTC time. The runs for the last 3 days can be seen here:
+
+![image](https://github.com/user-attachments/assets/7dddd566-7a10-4829-9e1e-6bda0f08745b)
+
 ## Storage
 
-The data lake in which to store the raw Parquet files from the scraper is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. the files are stored in the following folder hierarchy:
+The data lake in which to store the raw Parquet files is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. The files are stored using the following folder hierarchy:
 
-- Year
-- 
+![image](https://github.com/user-attachments/assets/7c7c0e52-a3b0-4825-ae53-fbd70884113c)
 
 ## Data Warehouse 
 
+BigQuery is used for the data warehouse. This is where we will perform the data modeling and additional transformations to curate a more impactful dataset. The Terraform script 
 
 
 
 
+## Transformation and Data Modeling
 
-## Transformation
-
-
+After the data arrive 
 
 
 
