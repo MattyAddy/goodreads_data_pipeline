@@ -60,9 +60,9 @@ Conver the pandas dataframe to a parquet file
 ## Infrastructure
 
 All of the core resources for this project are provided by Google Cloud: <br />
-**VM Instance**  <br />
-**Cloud Storage** <br />
-**BigQuery**  <br />
+- VM Instance  <br />
+- Cloud Storage <br />
+- BigQuery  <br />
 
 ### VM Instance
 
