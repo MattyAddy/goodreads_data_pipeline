@@ -80,7 +80,8 @@ The nucleus of this project is a virtual machine created via the Console. Before
 <img src="https://github.com/user-attachments/assets/54e40b9d-60e7-45cd-8c5e-fb2f2afce237" width="700" />
 
 
-I then created the VM instance in the Console with the following configuration:
+The VM instance is now created in the Console with the following configuration:
+
 - Machine type: e2-standard-4
 - Boot disk
     - Operating system: Ubuntu<br />
@@ -156,12 +157,13 @@ terraform init
 terraform plan
 terraform apply
 ```
+*Note: The initialization step only needs run once
 
 ## Containerization
 
 Docker is the tool to containerize the services needed to run this pipeline. Docker allows us to create an isolated, consistent, and reproducible environment for every pipeline run. When there are many services involved, such as when running Airflow, its helpful to have a service manage some of the complexity for the engineer. 
 
-There are two files involved in this case, a Dockerfile and a Docker Compose YAML file. The Dockerfile will build the image which contain the instructions to build the container which the Airflow DAG will be running on. The Docker Compose file contains the rest of images for the Airflow services such as the web scheduler and web app. For this project, the Dockerfile will be called from within the Docker Compose file.
+There are two files involved in this case, a Dockerfile and a Docker Compose YAML file. The Dockerfile will build the image which contain the instructions to build the container which the Airflow DAG will be running on. The Docker Compose file contains the rest of images for the Airflow services such as the web scheduler and web app. This file is pulled from Airflow's site and then modified with my own directories and environment variables. The Dockerfile will be called from within the Docker Compose file so that everything can be built with one command.
 
 To run thse containers, navigate to the `airflow` directory and run the following in order:
 
@@ -170,10 +172,9 @@ docker-compose build
 docker-compose up airflow-init
 docker-compose up
 ```
+*Note: The build step only needs to be run once unless the Dockerfile needs to be changed in the future
+
 We can now see the active containers by running: `docker-compose ps`
-
-
-
 
 ## Orchestration
 
@@ -213,6 +214,8 @@ BigQuery is used for the data warehouse. This is where we will perform the data 
 
 ![image](https://github.com/user-attachments/assets/c88fcc3a-ed80-4582-baf2-2875caad2770)
 
+![image](https://github.com/user-attachments/assets/d061ed02-399f-4b07-b9ab-4f123851782a)
+
 BigQuery is also partially responsible for the compute in this pipeline. When the dbt models run, dbt will be sending querires to BigQuery to actually run the transformations. 
 
 ## Transformation and Data Modeling
@@ -220,17 +223,31 @@ BigQuery is also partially responsible for the compute in this pipeline. When th
 After the data arrives in BigQuery, dbt Cloud is used to both transform and model the data. The data itself follows a medallion architecture with three layers: bronze, silver, and gold. 
 
 - Bronze: Initial state coming from data lake
-- Silver: Deduplicated
-- Gold:
+- Silver: Dataset that undergoes deduplication, cleaning, data type casting, and creating a unique primary key
+- Gold: Incremntal data coming from silver layer
 
-Once the data is ready, we can do some lightweight dimensional modeling following the Kimball approach. This involves separating out numerical data into a fact table and descriptive characterisics about those facts into dimension tables. The Kimball method follows this process:
+Once the data is ready in the gold layer, we can do some lightweight dimensional modeling following the Kimball approach. This involves separating out numerical data into a fact table and descriptive characterisics about those facts into dimension tables. The Kimball method follows this four-step design process:
 
-Define the business problem
-Set the grain of the table
-Build the dimensions
-Build the fact
+- Choose the business problem
+- Define the grain of the data
+- Select the dimensions
+- Select the facts
 
-Since there are a limited number of fields to work with, the data model is very simple:
+This process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
+
+
+
+
+
+
+
+
+From start to finish, here is the data lineage from dbt:
+
+
+
+
+
 
 
 ## Visualization
