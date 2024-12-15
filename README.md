@@ -159,7 +159,7 @@ terraform apply
 
 ## Containerization
 
-Docker
+Docker is the tool to containerize the services needed to run this pipeline. Docker allows us to create an isolated, consistent, and reproducible environment for every pipeline run. When there are many services involved, such as when running Airflow, its helpful to have a service manage some of the complexity for the engineer. There are two files involved in this case, a Dockerfile and a docker-compose YAML file. The Dockerfile
 
 
 
