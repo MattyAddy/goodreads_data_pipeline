@@ -15,8 +15,7 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 4. Transform warehouse data
 5. Visualize
 
-
-![Goodreads Data Pipeline](https://github.com/user-attachments/assets/4c38c82c-8b21-4ae9-9bc2-8b7f7bca286f)
+<img src="https://github.com/user-attachments/assets/4c38c82c-8b21-4ae9-9bc2-8b7f7bca286f" width="800" />
 
 **Cloud Vendor**: Google Cloud Plaform <br />
 **Infrastructure Deployment**: Terraform <br />
