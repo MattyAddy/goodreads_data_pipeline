@@ -119,8 +119,6 @@ I then installed the following on the VM:
 - Terraform
 - Airflow
 
-For the extensive installation and path variable configuration, please see: 
-
 ### Terraform Deployment
 
 The remaining resources to deploy are GCP Cloud Storage and BigQuery. These resources will be deployed via Terraform from the VM. Terraform is an Infrastructure as Code tool (IaC) which allows for code-based deployment without neeeding to access the Console. One can consistently deploy resources with the exact configuration each time with the ability to store those files in source control. The two files `main.tf` and `variables.tf` are found under this project's `terraform` directory.
@@ -140,13 +138,13 @@ The process to setup Terraform and deploy:
 
 ![image](https://github.com/user-attachments/assets/b1c6e462-df2a-4709-90e6-65f356114a75)
 
-- The file is downloaded locally and stored in the following directory:
+- Create new hidden directory in the VM from the root directory: `mkdir .google`
+- Create subdirectory: `mdkir credentials`
+- Create empty file: `google_credentials.json`
+- Edit the file: nano
+- Copy the JSON file from local downloads into this new file on the VM:
 
-- The JSON can be sent to the VM via SFTP
-
-
-
-
+With the authentication piece complete, terraform is then....
 
 
 
