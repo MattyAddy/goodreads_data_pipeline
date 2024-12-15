@@ -112,20 +112,17 @@ The VM can also be connected to via VS Code in order to access the pipeline scri
 
 ![image](https://github.com/user-attachments/assets/c50a5045-ce2c-4479-bbf7-923c669eaa25)
 
-
-
-
-
-
-
-
-
-
 I then installed the following on the VM:
 - Anaconda
 - Docker
+- Docker Compose
 - Terraform
 - Airflow
+
+For the extensive installation and path variable configuration, please see: 
+
+
+
 
 
 
