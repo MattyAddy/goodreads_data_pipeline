@@ -41,23 +41,21 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 
 ## Web Scraping
 
-Before diving into the pipeline, I needed to get a working script to ingest data from Goodreads and drop to a file. Ideally I could use their API, but the company recently stopped issuing API keys. With that in mind, I started learning about webscraping. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. I decided to focus specifically on the "Most Read This Week" books per genre. I started with the genre page and extraced just the urls for each of the 40 genres.
+Before diving into the pipeline, I needed to first create a python script to ingest data from Goodreads and drop to a file. Ideally I could use their API, but the company recently stopped issuing API keys so I turned to web scraping instead. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. I decided to focus specifically on the "Most Read This Week" books for each main genre. I started with the parent genre page and extraced just the urls for each of the 40 genres.
 
-If I navigate to one to a genre, we can see 100 books on the page. When selecting an individual book, we can now see some meaningful data such as Publishing Date, Author, Number of Page, and Review data. Each book will ultimately be the grain of the dataset. To illustrate, this is how one example will appear if I save as a CSV:
+![image](https://github.com/user-attachments/assets/a9ec8526-059a-4913-97a4-45f8ff049fb1)
 
+If I navigate to one to a genre, we can see 100 books on the page. When selecting an individual book, we can now see some meaningful data such as Publishing Date, Author, Number of Page, and Review data. Each book will ultimately be the grain of the dataset.
 
+![Screenshot 2024-12-15 182149](https://github.com/user-attachments/assets/da915c23-0d01-4d63-ad73-ebee449bf174)
 
+At a high level, the scraper follows this process:
 
-
-At a high level, this is what the scraper is doing:
-
-Extract list of genre URL's from the HTML and add to a list
-Loop through the list and extract the book URLS from each and add to another list
-Perform the scraping via the BLANK function and drop to a json file
-Add each json to a list and generate one pandas dataframe
-Conver the pandas dataframe to a parquet file
-
-
+- Extract a list of genre URL's from the HTML and add to a "genre" list
+- Loop through the list and extract the book URLS from each and add to a "book" list
+- Perform the scraping via the "book" function and return a dictionary for each book.
+- Add each dictionary to a list and generate a single pandas dataframe from that final list.
+- Convert the pandas dataframe to a parquet file
 
 ## Infrastructure
 
