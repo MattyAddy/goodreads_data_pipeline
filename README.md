@@ -121,6 +121,18 @@ I then installed the following on the VM:
 
 For the extensive installation and path variable configuration, please see: 
 
+### Terraform Deployment
+
+The remaining resources to deploy are GCP Cloud Storage and BigQuery. These resources will be deployed via Terraform from the VM. Terraform is an Infrastructure as Code tool (IaC) which allows quick code-based deployment without neeeding to access the Console. One can consistently deploy resources with the exact configuration each time with the ability to store those files in source control. The two files `main.tf` and `variables.tf` are found under this project's `terraform` directory.
+
+The process to setup Terraform and deploy:
+
+- Create Service Account in the Console:
+- Assign the following roles to the account
+- Under Service Acconts/Keys, Add Key as a JSON file
+
+![image](https://github.com/user-attachments/assets/b1c6e462-df2a-4709-90e6-65f356114a75)
+
 
 
 
