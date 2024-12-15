@@ -197,14 +197,18 @@ The data lake in which to store the raw Parquet files is Google Cloud Storage. A
 
 ## Data Warehouse 
 
-BigQuery is used for the data warehouse. This is where we will perform the data modeling and additional transformations to curate a more impactful dataset. The Terraform script 
+BigQuery is used for the data warehouse. This is where we will perform the data modeling and additional transformations to curate a more impactful dataset. The Terraform script defined two different datasets: goodreads_db_raw and goodreads_db. BQ "datasets" are the equivalent to schemas in other databases such as SQL Server. Heres a quick query to show the raw data after it initially lands:
+
+
+
+
 
 
 
 
 ## Transformation and Data Modeling
 
-After the data arrive 
+After the data arrives in BigQuery, dbt Cloud is used to both transform and model the data.
 
 
 
@@ -213,8 +217,7 @@ After the data arrive
 
 ## Visualization
 
-
-
+The finalized output is a two page Looker Studio dashboard.
 
 
 
