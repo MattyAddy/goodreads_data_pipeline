@@ -163,6 +163,18 @@ Docker is the tool to containerize the services needed to run this pipeline. Doc
 
 There are two files involved in this case, a Dockerfile and a Docker Compose YAML file. The Dockerfile will build the image which contain the instructions to build the container which the Airflow DAG will be running on. The Docker Compose file contains the rest of images for the Airflow services such as the web scheduler and web app. For this project, the Dockerfile will be called from within the Docker Compose file.
 
+To run thse containers, navigate to the `airflow` directory and run the following in order:
+
+```
+docker-compose build
+docker-compose up airflow-init
+docker-compose up
+```
+We can now see the active containers by running: `docker-compose ps`
+
+
+
+
 ## Orchestration
 
 Orchestration for this project will be handled by Airflow running on the Docker containers defined above. In simple terms, Airflow allows us to create and schedule the tasks in the pipeline via code. This is handled in the DAG (Directed Acyclic Graph) which defines the workflow's configuration and dependencies. The following screenshot outlines the 6 tasks in the DAG:
@@ -199,20 +211,26 @@ The data lake in which to store the raw Parquet files is Google Cloud Storage. A
 
 BigQuery is used for the data warehouse. This is where we will perform the data modeling and additional transformations to curate a more impactful dataset. The Terraform script defined two different datasets: goodreads_db_raw and goodreads_db. BQ "datasets" are the equivalent to schemas in other databases such as SQL Server. Heres a quick query to show the raw data after it initially lands:
 
+![image](https://github.com/user-attachments/assets/c88fcc3a-ed80-4582-baf2-2875caad2770)
 
-
-
-
-
-
+BigQuery is also partially responsible for the compute in this pipeline. When the dbt models run, dbt will be sending querires to BigQuery to actually run the transformations. 
 
 ## Transformation and Data Modeling
 
-After the data arrives in BigQuery, dbt Cloud is used to both transform and model the data.
+After the data arrives in BigQuery, dbt Cloud is used to both transform and model the data. The data itself follows a medallion architecture with three layers: bronze, silver, and gold. 
 
+- Bronze: Initial state coming from data lake
+- Silver: Deduplicated
+- Gold:
 
+Once the data is ready, we can do some lightweight dimensional modeling following the Kimball approach. This involves separating out numerical data into a fact table and descriptive characterisics about those facts into dimension tables. The Kimball method follows this process:
 
+Define the business problem
+Set the grain of the table
+Build the dimensions
+Build the fact
 
+Since there are a limited number of fields to work with, the data model is very simple:
 
 
 ## Visualization
