@@ -68,7 +68,7 @@ All of the core resources for this project are provided by Google Cloud: <br />
 
 ### VM Instance
 
-The nucleus of this project is a virtual machine created via the Console. Before spinning up the resource, I generated an SSH key which allows me to remotely access the VM via Git Bash and VS Code. I followed this process:
+The nucleus of this project is a virtual machine created via the Console. Before spinning up the resource, I generated an SSH key which allows me to remotely access the VM via Git Bash and VS Code:
 
 - Navigate to the hidden directory .ssh/ from the root directory  <br />
 - Run the following to generate the keypair: `ssh-keygen -t rsa -f ~/.ssh/gcp_key -C madams`  <br />
@@ -77,7 +77,7 @@ The nucleus of this project is a virtual machine created via the Console. Before
 
 - Copy the public key and paste in Google Cloud under Metadata/SSH Keys:
 
-![image](https://github.com/user-attachments/assets/54e40b9d-60e7-45cd-8c5e-fb2f2afce237)
+<img src="https://github.com/user-attachments/assets/54e40b9d-60e7-45cd-8c5e-fb2f2afce237" width="700" />
 
 
 I then created the VM instance in the Console with the following configuration:
@@ -87,18 +87,25 @@ I then created the VM instance in the Console with the following configuration:
     Version: Ubuntu 20.04 LTS <br />
     Size: 32 GB <br />
 
-![image](https://github.com/user-attachments/assets/8ea21127-9118-4533-937d-74e330126241)
+<img src="https://github.com/user-attachments/assets/8ea21127-9118-4533-937d-74e330126241" width="700" />
+
+To access the machine via SSH:
+
+- Create a config file in the same .ssh/ directory using: `touch config`
+- Open VS Code with the .ssh directory:` code .`
+- Populate the file as follows:
+```
+Host instance-madams-1
+    HostName 34.74.218.92
+    User madams
+    IdentityFile c:/Users/matta/.ssh/gcp_key
+```
+The HostName IP is found under the VM Instance for External IP:  <br />
+
+<img src="https://github.com/user-attachments/assets/3a8f8329-26b7-489d-8b00-8259bbaa24a8" width="300" />
 
 
 
-
-I can now access the VM remotely through the following steps:
-
-Create key in Console
-
-Create hidden directory on local machines root (~) directory
-
-Access the file via VS Code and paste the private key into .....
 
 
 
