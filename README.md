@@ -35,6 +35,7 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 - dbt Cloud account
 - Github account
 - Python 3
+- Google Cloud SDK
 - Git Bash
 - Visual Studio Code
 
@@ -67,15 +68,19 @@ All of the core resources for this project are provided by Google Cloud: <br />
 
 ### VM Instance
 
-The nucleus of this project is a virtual machine created via the Console
+The nucleus of this project is a virtual machine created via the Console. Before spinning up the resource, I generated an SSH key which allows me to remotely access the VM via Git Bash and VS Code. I followed this process:
 
+Navigate to the hidden directory .ssh/ from the root directory  <br />
+Run the following to generate the keypair: `ssh-keygen -t rsa -f ~/.ssh/gcp_key -C madams`  <br />
+
+![image](https://github.com/user-attachments/assets/943d24b6-927e-43e6-9617-7bc64551c3f8)
 
 
 This machine has the following settings:
 
 
 
-One can access the VM remotely through the following steps:
+I can now access the VM remotely through the following steps:
 
 Create key in Console
 
