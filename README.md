@@ -34,6 +34,9 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 - Google Cloud account
 - dbt Cloud account
 - Github account
+- Python 3
+- Git Bash
+- Visual Studio Code
 
 ## Web Scraping
 
