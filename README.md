@@ -104,6 +104,30 @@ The HostName IP is found under the VM Instance for External IP:  <br />
 
 <img src="https://github.com/user-attachments/assets/3a8f8329-26b7-489d-8b00-8259bbaa24a8" width="300" />
 
+- Run the following in root directory: `ssh instance-madams-1`
+
+![image](https://github.com/user-attachments/assets/b10fd753-f77e-4ec7-913d-2496262f200f)
+
+The VM can also be connected to via VS Code in order to access the pipeline scripts 
+
+![image](https://github.com/user-attachments/assets/c50a5045-ce2c-4479-bbf7-923c669eaa25)
+
+
+
+
+
+
+
+
+
+
+I then installed the following on the VM:
+- Anaconda
+- Docker
+- Terraform
+- Airflow
+
+
 
 
 
