@@ -141,28 +141,25 @@ The process to setup Terraform and deploy:
 - Create new hidden directory in the VM from the root directory: `mkdir .google`
 - Create subdirectory: `mdkir credentials`
 - Create empty file: `google_credentials.json`
-- Edit the file: nano
-- Copy the JSON file from local downloads into this new file on the VM:
+- Edit the file: `nano google_credentials.json`
+- Copy the JSON file from local downloads into the empty file on the VM:
+- 
+<img width="500" alt="Screenshot 2024-12-15 145358" src="https://github.com/user-attachments/assets/2f742b23-2cff-494f-a046-ff35d78b1ccc" />
 
-With the authentication piece complete, terraform is then....
+- Export environment variable: `export GOOGLE_APPLICATION_CREDENTIALS=~/.google/credentials/google_credentials.json`
+- Authenticate service account: `gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS`
+- Add credential file path to the variables Terraform file
+- Run the following inside of terraform directory to initialze and deploy resources:
 
-
-
-
-
-
-
-
-In addition to the compute resource, I am using Cloud Storage for the data lake and BigQuery for the data warehouse. These resources differ in that they were deployed via Terraform. This tool allows the user to use code to deploy resources without needing the Console UI. The VM can also be deployed using Terraform if needed. During testing, I was dropping and recreating the storage containers and BQ datasets on a regular basis (as opposed to just creating the VM once), so Terraform was a great tool to drop and replace resources efficiently.
-
-The terraform folder has the main.tf and varibables.tf files which define the resources. To deploy, one runs the following commands sequentially on the VM: <br />
-
-
-
-
+```
+terraform init
+terraform plan
+terraform apply
+```
 
 ## Containerization
 
+Docker
 
 
 
