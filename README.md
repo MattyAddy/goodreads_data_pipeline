@@ -229,9 +229,19 @@ After the data arrives in BigQuery, dbt Cloud is used to both transform and mode
 Once the data is ready in the gold layer, we can do some lightweight dimensional modeling following the Kimball approach. This involves separating out numerical data into a fact table and descriptive characterisics about those facts into dimension tables. The Kimball method follows this four-step design process:
 
 - Choose the business problem
+    - How can we provide actionable data to help readers select their next book?
 - Define the grain of the data
+    - 1 book per record
 - Select the dimensions
+    - Author
+    - Genre
+    - Date
 - Select the facts
+    - Number of pages
+    - Rating Count
+    - Average Rating
+    - Review Count
+    - Top Shelf Indicator
 
 This process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
 
@@ -242,12 +252,23 @@ This process will be relatively straightforward since there is only 1 dataset, b
 
 
 
-From start to finish, here is the data lineage from dbt:
+
+From start to finish, here is the data lineage from dbt.
 
 
 
 
 
+
+We can see that date is missing since it is generated through macro provided by the calogica/dbt_date package
+
+
+
+
+
+
+
+The code to perform each of these steps are found under `dbt/models/` of this repo.
 
 
 ## Visualization
