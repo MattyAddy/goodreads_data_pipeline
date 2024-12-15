@@ -212,7 +212,7 @@ The data lake in which to store the raw Parquet files is Google Cloud Storage. A
 
 BigQuery is used for the data warehouse. This is where we will perform the data modeling and additional transformations to curate a more impactful dataset. The Terraform script defined two different datasets: goodreads_db_raw and goodreads_db. BQ "datasets" are the equivalent to schemas in other databases such as SQL Server. Heres a quick query to show the raw data after it initially lands:
 
-![image](https://github.com/user-attachments/assets/c88fcc3a-ed80-4582-baf2-2875caad2770)
+![image](https://github.com/user-attachments/assets/eacd31bb-d3e2-4482-9cd6-8c2520ec10ab)
 
 ![image](https://github.com/user-attachments/assets/d061ed02-399f-4b07-b9ab-4f123851782a)
 
@@ -258,16 +258,42 @@ Finally, we can schedule a time for these models to run daily. Since this is a f
 
 ![image](https://github.com/user-attachments/assets/5312fc74-5cc3-4c5d-8c97-16e7f206825b)
 
-
 The code to perform each of these steps are found under `dbt/models/` of this repo.
-
 
 ## Visualization
 
-The finalized output is a two page Looker Studio dashboard.
+The finalized output is a two page Looker Studio dashboard:
 
 
+Summary:
+![image](https://github.com/user-attachments/assets/87b86698-01fa-40df-8dc6-8f1ea2ba642e)
 
+This tab gives us a visual reference to see how some of the top books stack up. For myself, I love historical fiction, so I will apply some filtering and see whats both highly reviewed and highly rated:
+
+![image](https://github.com/user-attachments/assets/8914e0ab-de51-46e8-a2fe-ba365953f5fb)
+
+If I really want something quick, I can click the "Top Shelf" button for which 1 book will show. This metric comes from a macro added to the fact table for books that have more than 100,000 ratings, 10,000 reviews, and an average rating of 4.5 or higher:
+
+![image](https://github.com/user-attachments/assets/f3a4fa50-d592-47c0-a184-360639e74966)
+
+From here, the process comes full circle. To investigate this one book further, I can the URL button which brings me back to Goodreads. From here, I can dig into some reviews and mkae the final decision:
+
+![image](https://github.com/user-attachments/assets/ddec590d-64b8-4f42-b462-8209b2248b0d)
+
+
+In addition to the charts, I also have a detail page if one likes to view data in a tabular format:
+
+![image](https://github.com/user-attachments/assets/3cdc5f64-addc-4034-8310-67c9df657762)
 
 
 ## Conclusion
+
+In summary, we can find interesting ways to solve problem using data!
+
+For any questions or feedback, you can reach me here:
+- Linkedin:
+- Email: matt.adams9898@gmail.com
+
+Thank you!
+
+
