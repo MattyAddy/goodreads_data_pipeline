@@ -31,8 +31,6 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 
 ## Prerequisites
 
-The following preqs are free and relatively straightforward to setup
-
 - Google Cloud account
 - dbt Cloud account
 - Github account
