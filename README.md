@@ -245,27 +245,18 @@ Once the data is ready in the gold layer, we can do some lightweight dimensional
 
 This process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
 
-
-
-
-
-
-
+![untitled](https://github.com/user-attachments/assets/e3aead99-7128-49de-804a-ecd4abec69aa)
 
 
 From start to finish, here is the data lineage from dbt.
 
-
-
-
-
+![image](https://github.com/user-attachments/assets/b403c950-ca60-42ac-ba9f-0b7de7b0d040)
 
 We can see that date is missing since it is generated through macro provided by the calogica/dbt_date package
 
+Finally, we can schedule a time for these models to run daily. Since this is a free account, we don't have the option of calling the dbt API inside the Airflow DAG which can be easily done with the DbtCloudRunJobOperator. The next best option is to schedule separately via the dbt UI by creating a new Job and setting a schedule. Here are the last handful of runs which happen at 15:00 UTC:
 
-
-
-
+![image](https://github.com/user-attachments/assets/5312fc74-5cc3-4c5d-8c97-16e7f206825b)
 
 
 The code to perform each of these steps are found under `dbt/models/` of this repo.
