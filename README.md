@@ -221,7 +221,7 @@ BigQuery is used for the data warehouse. This is where I conducted the data mode
 
 ![image](https://github.com/user-attachments/assets/d061ed02-399f-4b07-b9ab-4f123851782a)
 
-BigQuery is also partially responsible for the compute in this pipeline. When the dbt models run, dbt will be sending querires to BigQuery to actually run the transformations. 
+BigQuery is also partially responsible for the compute in this pipeline. When the dbt models run, dbt will be sending queries to BigQuery to actually run the transformations. 
 
 ## Transformation and Data Modeling
 
@@ -232,25 +232,24 @@ After the data arrives in BigQuery, dbt Cloud is used to both transform and mode
 - Gold: Incremental data coming from silver layer
 
 Once the data is ready in the gold layer, we can do some lightweight dimensional modeling following the Kimball approach. This involves separating out numerical data into a fact table and descriptive characterisics about those facts into dimension tables. The Kimball method follows this four-step design process:
-
-- Choose the business problem
+1. Choose the business problem <br />
     - How can we provide actionable data to help readers select their next book?
-- Define the grain of the data
+2. Define the grain of the data <br />
     - 1 book per record
-- Select the dimensions
+3. Select the dimensions <br />
     - Author
     - Genre
     - Date
-- Select the facts
+4. Select the facts <br />
     - Number of pages
     - Rating count
     - Average rating
     - Review count
     - Top shelf indicator
       
-Since there are minimal fields to update for the dimensions, they will be SCD (Slowly Changing Dimension) Type 1. Type 1 SCD's will overwrite with new data with no record the history. With richer data, the more typical SCD Type 2 can be used where new records are added for changes to certains field in a dimension.   
+Since there are minimal fields to update for the dimensions, these tables will be SCD (Slowly Changing Dimension) Type 1. Type 1 SCD's will overwrite with new data with no record of the history. With richer data, the more typical SCD Type 2 can be used where new records are added for changes to certains field in a dimension.   
 
-This process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
+This modeling process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
 
 <img src="https://github.com/user-attachments/assets/e3aead99-7128-49de-804a-ecd4abec69aa" width="850" />
 
@@ -264,7 +263,7 @@ Finally, we can schedule a time for these models to run daily. Since this is a f
 
 <img src="https://github.com/user-attachments/assets/5312fc74-5cc3-4c5d-8c97-16e7f206825b" width="850" />
 
-The code to perform each of these steps are found under `dbt/models/` of this repo.
+The code to perform each of these steps is found under `dbt/models/` directory.
 
 ## Visualization
 
@@ -280,7 +279,7 @@ If I really want something quick and dirty, I can click the "Top Shelf" button t
 
 <img src="https://github.com/user-attachments/assets/f3a4fa50-d592-47c0-a184-360639e74966" width="850" />
 
-From here, the process comes full circle. To investigate this book further, I can select the URL button which brings me back to Goodreads. From here, I can dig into some reviews and make the final decision:
+From here, the process comes full circle. To investigate this book further, I can select the URL button which brings me back to Goodreads. I can now dig into some reviews and make the final decision:
 
 <img src="https://github.com/user-attachments/assets/ddec590d-64b8-4f42-b462-8209b2248b0d" width="850" />
 
@@ -292,15 +291,15 @@ In addition to the charts, I also have a detail page if one likes to view data i
 
 ## Future Enhancements
 
-- Scraping Goodreads asyncronously. I have a separate script which successfully scrapes the URL's in parallel using asyncio, but I unforunately got my IP address temporarily blocked by Goodreads. This can be bypassed by purchasing proxies. For now, I will keep the budget as cheap as possible.
+- Scraping Goodreads asyncronously. I have a separate script which successfully scrapes the URL's in parallel using asyncio, but I unforunately got my IP address temporarily blocked by Goodreads. This can be bypassed by purchasing proxies. For now, I will keep the budget as cheap as possible
 - Finding a way to include more fields for the dimensions. This could involve pulling data from other API's or even scraping sites such as Wikipedia
-- Upgrading to a paid dbt CLoud account in order to call their API. This would ensure that the dbt model runs can be included inside of the Airflow pipeline so that all dependencies are tied together
+- Upgrading to a paid dbt Cloud account in order to call their API. This would ensure that the dbt model runs can be included inside of the Airflow pipeline so that all dependencies are tied together
 - Pipeline monitoring to send alerts via email if the pipeline fails
 - Validation scripts in dbt to ensure data quality and accuracy after the data has passed through the series of models
 
 ## Conclusion
 
-In summary, we can find interesting ways to solve problems using data! I hope you enjoyed reading through this project.
+In summary, we can find interesting ways to solve problems using data! I hope you enjoyed following this project.
 
 For any questions or feedback, you can reach me here:
 - Linkedin: [linkedin.com/in/mattfadams](https://www.linkedin.com/in/mattfadams)
