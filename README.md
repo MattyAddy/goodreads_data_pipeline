@@ -187,7 +187,7 @@ Orchestration for this project will be handled by Airflow running on the Docker 
 
 This screenshot comes from the Airflow UI which is running on the web server container defined in the YAML file. It can be accessed by running these steps:
 - Forward port 8080 in VS Code
-- 
+
 ![image](https://github.com/user-attachments/assets/ba5dcfde-95ca-4df7-97b2-16f529d7bd41)
 
 - Navigate to http://localhost:8080/home on the local machine
@@ -293,7 +293,7 @@ In addition to the charts, I also have a detail page if one likes to view data i
 In summary, we can find interesting ways to solve problems using data! I hope you enjoyed reading through this project.
 
 For any questions or feedback, you can reach me here:
-- Linkedin: linkedin.com/in/mattfadams
+- Linkedin: [linkedin.com/in/mattfadams](https://www.linkedin.com/in/mattfadams)
 - Email: matt.adams9898@gmail.com
 
 Thank you!
