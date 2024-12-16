@@ -5,7 +5,7 @@ Reading is one my favorite activies. Whether I'm learning about art history or b
 
 The following project is a data pipeline which ingests, loads, and transforms book data on a daily cadence. A dashboard then consumes this data and provides actionable insights so that users can spend less time researching and more time reading.
 
-This project leverages I've learned in the Data Engineering Zoomcamp. Thank you to Alexey and team for the content!
+This project leverages some of the content I learned from the Data Engineering Zoomcamp. Thank you to Alexey and team for the content!
 
 ## Architecture
 The architecture for this pipeline follows an ELT approach which is short for Extract, Load, and Transform. At a high level, the pipeline conducts the following:
