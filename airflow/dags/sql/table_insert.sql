@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS {{ params.dataset_name }}.{{ params.table_name }} (
         RatingCount STRING,
         AverageRating STRING,
         ReviewCount STRING,
-        ISBN STRING
+        ISBN STRING,
+        URL STRING
 );
  
 TRUNCATE TABLE {{ params.dataset_name }}.{{ params.table_name }};

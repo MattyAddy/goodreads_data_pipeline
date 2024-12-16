@@ -66,7 +66,7 @@ x-airflow-common:
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/google_credentials.json'
     GCP_PROJECT_ID: 'goodreads-madams'
     GCP_GCS_BUCKET: 'madams-terraform-book-data-lake'
-    GCP_DATASET: 'goodreads_db'
+    GCP_DATASET: 'goodreads_db_raw'
 
   volumes:
     - ./dags:/opt/airflow/dags
