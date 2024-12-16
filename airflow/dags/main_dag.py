@@ -6,15 +6,15 @@ from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobO
 from google.cloud import storage
 
 # DAG variables
-start = pendulum.datetime(2024, 11, 9, tz="UTC")
+start = pendulum.datetime(2024, 12, 12, tz="UTC")
 airflow_file_path = os.environ.get("AIRFLOW_HOME","/opt/airflow/")
 
-execution_date_string = "{{ data_interval_start.strftime('%Y%m%d') }}"
-year_folder = "{{ data_interval_start.strftime('%Y') }}"
-month_folder = "{{ data_interval_start.strftime('%m') }}"
+execution_date_string = "{{ data_interval_end.strftime('%Y%m%d') }}"
+year_folder = "{{ data_interval_end.strftime('%Y') }}"
+month_folder = "{{ data_interval_end.strftime('%m') }}"
 parquet_file = f"goodreads_{execution_date_string}.parquet"
 blob_name = f"madams-terraform-book-data-lake/raw_data/{year_folder}/{month_folder}"
-schema = "goodreads_db_raw"
+schema = "goodreads_db_raw" 
 external_table = "ext_book_bronze_stg"
 table = "book_bronze_stg"
 
@@ -28,13 +28,13 @@ GCP_DATASET = os.environ.get("GCP_DATASET")
 # Taskflow DAG
 @dag(
     dag_id = "goodreads_main_dag",
-    schedule = '0 7 * * *',
-    max_active_runs = 1
+    schedule = '0 12 * * *',
+    max_active_runs = 1,
     start_date = start,
-    catchup = False,
+    catchup = True,
     default_args = {
-        "retries": 2,
-        "retry_delay": duration(seconds = 100)
+        "retries": 1,
+        "retry_delay": pendulum.duration(seconds = 100)
     },
 )
 def goodreads_etl_taskflow():
@@ -98,11 +98,12 @@ def goodreads_etl_taskflow():
         }   
         )
 
-    # Establish dependencies
+    # Map taskflow to legacy
     goodreads_extract = goodreads_extract_data()
     goodreads_load = goodreads_load_data(GCS_BUCKET,source_file_name,destination_blob_name)
     remove_local_file = remove_local_file_data()
 
+    # Establish dependencies
     goodreads_extract >> goodreads_load >> remove_local_file  >> delete_external_table >> create_insert_external_table >> internal_table_insert
 
 goodreads_etl_taskflow()

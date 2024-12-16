@@ -39,7 +39,7 @@ for genre_url in genre_url_list:
     book_list_div = book_list_soup.find_all('div', class_="leftAlignedImage bookBox")
     genre = genre_url.split('/most_read/')[1]
     # 10 books per genre
-    for book_url_div in book_list_div[0:10]:
+    for book_url_div in book_list_div:
         try:
             book_url_full = book_url_div.find('a')['href']
             book_url = base_url + book_url_full
@@ -59,9 +59,11 @@ def book(book_url,genre):
         publish_div = book_soup.find("div", class_="BookDetails").find("div", class_="FeaturedDetails").find_all("p")
     except AttributeError:
         publish_div = 'None'
-
     try:
         script_json = json.loads(book_div.string)
+    except(TypeError,KeyError,AttributeError,IndexError):
+        script_json = "None"
+    try:
         title = script_json['name']
         author = script_json['author'][0]['name']
         no_pages = script_json['numberOfPages']
@@ -69,20 +71,20 @@ def book(book_url,genre):
         average_rating =  script_json['aggregateRating']['ratingValue']
         review_count = script_json['aggregateRating']['reviewCount']
     except (TypeError,KeyError,AttributeError,IndexError):
-        title = "none"
-        author = "none"
+        title = "None"
+        author = "None"
         no_pages = "-1"
         rating_count = "-1"
         average_rating = "-1"
         review_count = "-1"
     try:
         isbn = script_json['isbn']
-    except KeyError:
-        isbn = "none"
+    except (TypeError,KeyError,AttributeError,IndexError):
+        isbn = "None"
     try:
         publish_date = publish_div[1].text.split("First published")[1].strip()
     except (TypeError,KeyError,AttributeError,IndexError):
-        publish_date = "none"
+        publish_date = "None"
 
     book_dict = {
         "Title": title, 
@@ -93,7 +95,8 @@ def book(book_url,genre):
         "RatingCount": str(rating_count),
         "AverageRating": str(average_rating),
         "ReviewCount": str(review_count),
-        "ISBN": isbn
+        "ISBN": isbn,
+        "URL": book_url
     }
 
     return book_dict
@@ -103,8 +106,8 @@ def main():
     for book_pair in book_url_list:
         book_url = book_pair['book_url']
         genre = book_pair['genre']
-        book_dict = book(book_url,genre)
-        book_list.append(book_dict)
+        book_dict_final = book(book_url,genre)
+        book_list.append(book_dict_final)
         
     df = pd.DataFrame(book_list)
 
