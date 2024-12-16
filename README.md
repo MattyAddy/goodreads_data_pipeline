@@ -15,7 +15,7 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 4. Transform warehouse data
 5. Visualize
 
-<img src="https://github.com/user-attachments/assets/4c38c82c-8b21-4ae9-9bc2-8b7f7bca286f" width="800" />
+<img src="https://github.com/user-attachments/assets/d8c63285-32d3-497b-9c60-4b0520e23f81" width="850" />
 
 **Cloud Vendor**: Google Cloud Plaform <br />
 **Infrastructure Deployment**: Terraform <br />
@@ -26,7 +26,6 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 **Storage**: GCP Cloud Storage <br />
 **Transformation**: dbt Cloud <br />
 **Reporting**: Looker Studio <br />
-
 
 ## Prerequisites
 
@@ -40,17 +39,24 @@ The architecture for this pipeline follows an ELT approach which is short for Ex
 
 ## Web Scraping
 
-Before diving into the pipeline, I needed to first create a python script to ingest data from Goodreads and drop to a file. Ideally I could use their API, but the company recently stopped issuing API keys so I turned to web scraping instead. Though its not nearly as efficient, we can still extract meaningful data in a reasonble amount of time since the volume is so low. I decided to focus specifically on the "Most Read This Week" books for each main genre. I started with the parent genre page and extraced just the urls for each of the 40 genres.
+Before diving into the pipeline, I first needed to figure out how to ingest data from Goodreads. Ideally I could use their API, but the company recently stopped issuing API keys so I turned to web scraping instead. Though its not nearly as efficient, I can still extract meaningful data in a reasonble amount of time since the volume is so low. 
 
+I decided to focus specifically on the "Most Read This Week" books for each main genre. I started with the parent genre page and extraced just the urls for each of the 40 genres:
 
-If I navigate to one to a genre, we can see 100 books on the page. When selecting an individual book, we can now see some meaningful data such as publishing date, author, number of pages, and review data. Each book will ultimately be the grain of the dataset.
+<img src="https://github.com/user-attachments/assets/cc91bff0-1f95-4c04-8222-a6ace9464f53" width="300" />
 
-![Screenshot 2024-12-15 182149](https://github.com/user-attachments/assets/da915c23-0d01-4d63-ad73-ebee449bf174)
+If I navigate to a single genre under the "Most Read" option, there are 100 books on the page:
+
+<img src="https://github.com/user-attachments/assets/1f241d63-e5a7-415d-a0e9-b8764c5f31ce" width="400" />
+
+When selecting an individual book, we can now see some meaningful data such as publishing date, author, number of pages, and review data. Each book will ultimately be the grain of the dataset:
+
+<img src="https://github.com/user-attachments/assets/1dc6e397-f5e4-4743-b038-f314b3abb142" width="700" />
 
 At a high level, the scraper follows this process:
 
 - Extract a list of genre URL's from the HTML and add to a "genre" list
-- Loop through the list and extract the book URLS from each and add to a "book" list
+- Loop through the list and extract the book URLS from each of the genre pages and add to a "book" list
 - Perform the scraping via the "book" function and return a dictionary for each book.
 - Add each dictionary to a list and generate a single pandas dataframe from that final list.
 - Convert the pandas dataframe to a parquet file
@@ -58,9 +64,9 @@ At a high level, the scraper follows this process:
 ## Infrastructure
 
 All of the core resources for this project are provided by Google Cloud: <br />
-- VM Instance  <br />
-- Cloud Storage <br />
-- BigQuery  <br />
+- VM Instance
+- Cloud Storage
+- BigQuery
 
 ### VM Instance
 
