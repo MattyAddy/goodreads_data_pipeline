@@ -1,8 +1,0 @@
-logs/
-dags/__pycache__/
-dags/test.py
-data/
-plugins/
-python_scripts/test_scrape.py
-scripts/
-.env/
