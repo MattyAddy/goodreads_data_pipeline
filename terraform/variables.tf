@@ -24,6 +24,11 @@ variable "gcs_bucket" {
   default = "madams-terraform-book-data-lake"
 }
 
+variable "big_query_dataset_raw" {
+  description = "Goodreads Dataset Raw"
+  default = "goodreads_db_raw"
+}
+
 variable "big_query_dataset" {
   description = "Goodreads Dataset"
   default = "goodreads_db"
