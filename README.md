@@ -295,6 +295,8 @@ In addition to the charts, I also have a detail page if one likes to view data i
 - Scraping Goodreads asyncronously. I have a separate script which successfully scrapes the URL's in parallel using asyncio, but I unforunately got my IP address temporarily blocked by Goodreads. This can be bypassed by purchasing proxies. For now, I will keep the budget as cheap as possible.
 - Finding a way to include more fields for the dimensions. This could involve pulling data from other API's or even scraping sites such as Wikipedia
 - Upgrading to a paid dbt CLoud account in order to call their API. This would ensure that the dbt model runs can be included inside of the Airflow pipeline so that all dependencies are tied together
+- Pipeline monitoring to send alerts via email if the pipeline fails
+- Validation scripts in dbt to ensure data quality and accuracy after the data has passed through the series of models
 
 ## Conclusion
 
