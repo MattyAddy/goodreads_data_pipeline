@@ -247,20 +247,22 @@ Once the data is ready in the gold layer, we can do some lightweight dimensional
     - Average rating
     - Review count
     - Top shelf indicator
+      
+Since there are minimal fields to update for the dimensions, they will be SCD (Slowly Changing Dimension) Type 1. Type 1 SCD's will overwrite with new data with no record the history. With richer data, the more typical SCD Type 2 can be used where new records are added for changes to certains field in a dimension.   
 
 This process will be relatively straightforward since there is only 1 dataset, but these principles are able to scale to much larger projects. The end product for the data model is represented as such:
 
-![untitled](https://github.com/user-attachments/assets/e3aead99-7128-49de-804a-ecd4abec69aa)
+<img src="https://github.com/user-attachments/assets/e3aead99-7128-49de-804a-ecd4abec69aa" width="850" />
 
-From start to finish, here is the data lineage from dbt.
+From start to finish, here is the data lineage from dbt:
 
-![image](https://github.com/user-attachments/assets/b403c950-ca60-42ac-ba9f-0b7de7b0d040)
+<img src="https://github.com/user-attachments/assets/b403c950-ca60-42ac-ba9f-0b7de7b0d040" width="850" />
 
 We can see that date is missing since it is generated through macro provided by the calogica/dbt_date package
 
 Finally, we can schedule a time for these models to run daily. Since this is a free account, we don't have the option of calling the dbt API inside the Airflow DAG which can be easily done with the DbtCloudRunJobOperator. The next best option is to schedule separately via the dbt UI by creating a new Job and setting a schedule. Here are the last handful of runs which happen at 15:00 UTC:
 
-![image](https://github.com/user-attachments/assets/5312fc74-5cc3-4c5d-8c97-16e7f206825b)
+<img src="https://github.com/user-attachments/assets/5312fc74-5cc3-4c5d-8c97-16e7f206825b" width="850" />
 
 The code to perform each of these steps are found under `dbt/models/` of this repo.
 
@@ -268,26 +270,31 @@ The code to perform each of these steps are found under `dbt/models/` of this re
 
 The finalized output is a two page Looker Studio dashboard:
 
-Summary:
-![image](https://github.com/user-attachments/assets/87b86698-01fa-40df-8dc6-8f1ea2ba642e)
+<img src="https://github.com/user-attachments/assets/87b86698-01fa-40df-8dc6-8f1ea2ba642e" width="850" />
 
 This tab gives us a visual reference to see how some of the top books stack up. For myself, I love historical fiction, so I will apply some filtering and see what's both highly reviewed and highly rated:
 
-![image](https://github.com/user-attachments/assets/8914e0ab-de51-46e8-a2fe-ba365953f5fb)
+<img src="https://github.com/user-attachments/assets/8914e0ab-de51-46e8-a2fe-ba365953f5fb" width="850" />
 
 If I really want something quick and dirty, I can click the "Top Shelf" button to filter just the books that have this indicator attached. This metric comes from a macro added to the fact table for books that have more than 100,000 ratings, 10,000 reviews, and an average rating of 4.5 or higher. For this particular genre, there is just 1:
 
-![image](https://github.com/user-attachments/assets/f3a4fa50-d592-47c0-a184-360639e74966)
+<img src="https://github.com/user-attachments/assets/f3a4fa50-d592-47c0-a184-360639e74966" width="850" />
 
 From here, the process comes full circle. To investigate this book further, I can select the URL button which brings me back to Goodreads. From here, I can dig into some reviews and make the final decision:
 
-![image](https://github.com/user-attachments/assets/ddec590d-64b8-4f42-b462-8209b2248b0d)
+<img src="https://github.com/user-attachments/assets/ddec590d-64b8-4f42-b462-8209b2248b0d" width="850" />
 
 This one might be next!
 
 In addition to the charts, I also have a detail page if one likes to view data in a tabular format instead with all the metrics present:
 
-![image](https://github.com/user-attachments/assets/3cdc5f64-addc-4034-8310-67c9df657762)
+<img src="https://github.com/user-attachments/assets/3cdc5f64-addc-4034-8310-67c9df657762" width="850" />
+
+## Future Enhancements
+
+- Scraping Goodreads asyncronously. I have a separate script which successfully scrapes the URL's in parallel using asyncio, but I unforunately got my IP address temporarily blocked by Goodreads. This can be bypassed by purchasing proxies. For now, I will keep the budget as cheap as possible.
+- Finding a way to include more fields for the dimensions. This could involve pulling data from other API's or even scraping sites such as Wikipedia
+- Upgrading to a paid dbt CLoud account in order to call their API. This would ensure that the dbt model runs can be included inside of the Airflow pipeline so that all dependencies are tied together
 
 ## Conclusion
 
