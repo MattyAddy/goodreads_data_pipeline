@@ -8,10 +8,10 @@ The following project is a data pipeline which ingests, loads, and transforms bo
 This project leverages some of the content I learned from the Data Engineering Zoomcamp. Thank you to Alexey and team!
 
 ## Architecture
-The architecture for this pipeline follows an ELT approach which is short for Extract, Load, and Transform. At a high level, the pipeline conducts the following:
+The architecture for this pipeline follows an ELT approach (Extract, Load, and Transform). At a high level, the pipeline conducts the following:
 1. Extract data via web scraping
-2. Load to data lake
-3. Load to data warehouse
+2. Load file to data lake
+3. Load file to data warehouse
 4. Transform warehouse data
 5. Visualize
 
