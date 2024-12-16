@@ -113,7 +113,7 @@ The HostName IP is found under the VM Instance for External IP:  <br />
 
 The VM can also be connected to via VS Code in order to access the pipeline scripts 
 
-![image](https://github.com/user-attachments/assets/c50a5045-ce2c-4479-bbf7-923c669eaa25)
+<img src="https://github.com/user-attachments/assets/c50a5045-ce2c-4479-bbf7-923c669eaa25" width="700" />
 
 I then installed the following on the VM:
 - Anaconda
@@ -129,7 +129,8 @@ The remaining resources to deploy are GCP Cloud Storage and BigQuery. These reso
 The process to setup Terraform and deploy:
 
 - Create Service Account in the Console:
-![image](https://github.com/user-attachments/assets/9cf6caff-1637-4589-95e8-5dcf0c55abf7)
+- 
+<img src="https://github.com/user-attachments/assets/9cf6caff-1637-4589-95e8-5dcf0c55abf7" width="700" />
 
 - Assign the following roles to the account:
     - Compute Admin
@@ -145,8 +146,8 @@ The process to setup Terraform and deploy:
 - Create empty file: `google_credentials.json`
 - Edit the file: `nano google_credentials.json`
 - Copy the JSON file from local downloads into the empty file on the VM:
-- 
-<img width="500" alt="Screenshot 2024-12-15 145358" src="https://github.com/user-attachments/assets/2f742b23-2cff-494f-a046-ff35d78b1ccc" />
+  
+<img width="700" alt="Screenshot 2024-12-15 145358" src="https://github.com/user-attachments/assets/2f742b23-2cff-494f-a046-ff35d78b1ccc" />
 
 - Export environment variable: `export GOOGLE_APPLICATION_CREDENTIALS=~/.google/credentials/google_credentials.json`
 - Authenticate service account: `gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS`
@@ -183,16 +184,16 @@ We can now see the active containers by running: `docker-compose ps`
 
 Orchestration for this project will be handled by Airflow running on the Docker containers defined above. In simple terms, Airflow allows us to create and schedule the tasks in the pipeline via code. This is handled in the DAG (Directed Acyclic Graph) which defines the workflow's configuration and dependencies. The following screenshot outlines the 6 tasks in the DAG:
 
-![image](https://github.com/user-attachments/assets/b6ca3a4d-f410-4c98-829e-3b58074185e9)
+<img src="https://github.com/user-attachments/assets/b6ca3a4d-f410-4c98-829e-3b58074185e9" width="900" />
 
 This screenshot comes from the Airflow UI which is running on the web server container defined in the YAML file. It can be accessed by running these steps:
 - Forward port 8080 in VS Code
 
-![image](https://github.com/user-attachments/assets/ba5dcfde-95ca-4df7-97b2-16f529d7bd41)
+<img src="https://github.com/user-attachments/assets/ba5dcfde-95ca-4df7-97b2-16f529d7bd41" width="700" />
 
 - Navigate to http://localhost:8080/home on the local machine
 
-![image](https://github.com/user-attachments/assets/71e62614-dd6b-4954-b22c-c6d4e3d7e57d)
+<img src="https://github.com/user-attachments/assets/71e62614-dd6b-4954-b22c-c6d4e3d7e57d" width="700" />
 
 As mentioned previously there are 6 tasks in this DAG:
 - Extract data: Run bash command to kick off the python webscraping script which drops parquet file to `/data` directory
@@ -204,19 +205,19 @@ As mentioned previously there are 6 tasks in this DAG:
 
 The DAG runs on a daily schedule at 12:00 UTC time. The last 12 runs can be seen here. The final 4 runs represent the full dataset being pulled at the scheduled time:
 
-![image](https://github.com/user-attachments/assets/7dddd566-7a10-4829-9e1e-6bda0f08745b)
+<img src="https://github.com/user-attachments/assets/7dddd566-7a10-4829-9e1e-6bda0f08745b" width="700" />
 
 ## Storage
 
 The data lake used to store the raw parquet files is Google Cloud Storage. As mentioned prior, the container was deployed via Terraform. The files are stored using the following folder hierarchy:
 
-![image](https://github.com/user-attachments/assets/7c7c0e52-a3b0-4825-ae53-fbd70884113c)
+<img src="https://github.com/user-attachments/assets/7c7c0e52-a3b0-4825-ae53-fbd70884113c" width="700" />
 
 ## Data Warehouse 
 
 BigQuery is used for the data warehouse. This is where I conducted the data modeling and additional transformations to curate a more impactful dataset. The Terraform script defined two different datasets: goodreads_db_raw and goodreads_db. BQ "datasets" are the equivalent to schemas in other databases such as SQL Server. Heres a quick query to show the raw data after it initially lands:
 
-![image](https://github.com/user-attachments/assets/eacd31bb-d3e2-4482-9cd6-8c2520ec10ab)
+<img src="https://github.com/user-attachments/assets/eacd31bb-d3e2-4482-9cd6-8c2520ec10ab" width="700" />
 
 ![image](https://github.com/user-attachments/assets/d061ed02-399f-4b07-b9ab-4f123851782a)
 
