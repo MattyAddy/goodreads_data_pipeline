@@ -28,6 +28,11 @@ resource "google_storage_bucket" "book_data_lake" {
   }
 }
 
+resource "google_bigquery_dataset_raw" "goodreads_db_raw" {
+  dataset_id = var.big_query_dataset_raw
+  location   = var.location
+}
+
 resource "google_bigquery_dataset" "goodreads_db" {
   dataset_id = var.big_query_dataset
   location   = var.location
