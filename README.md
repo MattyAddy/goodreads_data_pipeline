@@ -129,7 +129,7 @@ The remaining resources to deploy are GCP Cloud Storage and BigQuery. These reso
 The process to setup Terraform and deploy:
 
 - Create Service Account in the Console:
-- 
+  
 <img src="https://github.com/user-attachments/assets/9cf6caff-1637-4589-95e8-5dcf0c55abf7" width="700" />
 
 - Assign the following roles to the account:
