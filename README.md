@@ -1,7 +1,7 @@
 # Goodreads Data Pipeline
 
 ## Introduction
-Reading is one my favorite activies. Whether I'm learning about art history or binging a fantasy series, I've always enjoyed the educational and entertainment benefits of reading each day. Though I enjoy the act, I've always struggled in finding that "next" book to read. I currently track my reading activity through Goodreads, which is part social media and part book database. This is also the place where I sift through reviews on unread books to decide which book to buy next. This is a time consuming process however so I wanted to create a more concise solution with a better signal to noise ratio. 
+Reading is one my favorite activies. Whether I'm learning about art history or binging a fantasy series, I've always enjoyed the educational and entertainment benefits of reading each day. Though I enjoy the act, I struggle with deciding on which book to read next. I currently track my reading activity through Goodreads, which is part social media and part book database. This is also the place where I sift through reviews on new books to help make an educated purchase decision. This is a time consuming process however, so I wanted to create a more concise solution with a better signal to noise ratio. 
 
 The following project is a data pipeline which ingests, loads, and transforms book data on a daily cadence. A dashboard then consumes this data and provides actionable insights so that users can spend less time researching and more time reading.
 
